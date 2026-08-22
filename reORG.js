@@ -8,6 +8,9 @@ export function reORG(obj) {
         rum: obj.rum,
         rumumrum: obj.rumumrum,
         neutral: obj.neutral,
-        role: obj.role
+        role: obj.role,
+
+        geo_physik: obj.geo_physik,   // NEU (Mini‑Fix 1)
+        geo_geo: obj.geo_geo          // NEU (Mini‑Fix 2)
     };
 }
