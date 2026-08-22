@@ -1,5 +1,4 @@
 export function reORG(obj) {
-
     return {
         clean: true,
         impulse: obj.impulse,
