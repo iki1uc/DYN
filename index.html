@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>NC‑LAGE‑SYSTEM – Multi‑Form Navigation</title>
+<title>NC‑LAGE‑SYSTEM – Industrie 6.0 Navigation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -18,6 +18,48 @@
     text-align: center;
     padding: 20px;
     color: #00eaff;
+    font-size: 32px;
+    letter-spacing: 2px;
+  }
+
+  .shape-panel, .grid {
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .shape-panel {
+    margin: 20px;
+    padding: 20px;
+    background: #111;
+    border-radius: 10px;
+    border: 1px solid #333;
+  }
+
+  .shape-panel h3 {
+    color: #ffdd00;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .shape-btn {
+    display: inline-block;
+    margin: 8px;
+    padding: 10px 16px;
+    background: #ffdd00;
+    color: #000;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+
+  .shape-btn:hover {
+    background: #c9b300;
+    transform: scale(1.05);
   }
 
   .grid {
@@ -33,11 +75,18 @@
     padding: 15px;
     border-radius: 10px;
     text-align: center;
+    transition: 0.2s;
+  }
+
+  .module:hover {
+    transform: scale(1.03);
+    border-color: #00eaff;
   }
 
   .module h2 {
     margin: 0;
     color: #00ff9d;
+    font-size: 22px;
   }
 
   .module p {
@@ -54,39 +103,34 @@
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
+    transition: 0.2s;
   }
 
   .btn:hover {
     background: #00bcd4;
+    transform: scale(1.05);
   }
 
-  .shape-panel {
+  /* Live‑Panel */
+  #live-panel {
     margin: 20px;
     padding: 20px;
     background: #111;
     border-radius: 10px;
     border: 1px solid #333;
-  }
-
-  .shape-panel h3 {
-    color: #ffdd00;
-  }
-
-  .shape-btn {
-    display: inline-block;
-    margin: 8px;
-    padding: 10px 16px;
-    background: #ffdd00;
-    color: #000;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .shape-btn:hover {
-    background: #c9b300;
+    color: #00eaff;
+    font-size: 14px;
+    white-space: pre-wrap;
   }
 </style>
+
+<script src="GEO.physik.js"></script>
+<script src="GEO.geo.js"></script>
+<script src="NC.engine.js"></script>
+<script src="org.js"></script>
+<script src="reORG.js"></script>
+<script src="dyn.js"></script>
+
 </head>
 
 <body>
@@ -172,6 +216,20 @@
   </div>
 
 </div>
+
+<!-- Live‑Panel -->
+<div id="live-panel"></div>
+
+<script>
+  const nc = NC.run(9);
+  const orgData = org(9);
+  const reorgData = reORG(orgData);
+
+  document.getElementById("live-panel").innerText =
+    "NC.engine:\n" + JSON.stringify(nc, null, 2) +
+    "\n\nORG:\n" + JSON.stringify(orgData, null, 2) +
+    "\n\nREORG:\n" + JSON.stringify(reorgData, null, 2);
+</script>
 
 </body>
 </html>
