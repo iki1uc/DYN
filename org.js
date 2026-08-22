@@ -1,11 +1,5 @@
-import { impulse } from "./impulse.js";
-import { schub } from "./schub.js";
-import { feuer } from "./feuer.js";
-import { VOLTAGE } from "./VOLTAGE.js";
-import { RUM } from "./RUM.js";
-import { RUMumRUM } from "./RUMumRUM.js";
-import { nc } from "./nc.js";
-import { role } from "./role.js";
+import { GEOP } from "./GEO.physik.js";
+import { GEOG } from "./GEO.geo.js";
 
 export function org(v) {
     return {
@@ -16,6 +10,9 @@ export function org(v) {
         rum: RUM(v),
         rumumrum: RUMumRUM(v),
         neutral: nc(v),
-        role: role(v)
+        role: role(v),
+
+        geo_physik: GEOP.cube(v),   // NEU (Mini‑Fix 1)
+        geo_geo: GEOG.all(v)        // NEU (Mini‑Fix 2)
     };
 }
