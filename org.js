@@ -1,6 +1,3 @@
-export function dyn(v) {
-    return v;
-}
 import { impulse } from "./impulse.js";
 import { schub } from "./schub.js";
 import { feuer } from "./feuer.js";
@@ -11,7 +8,6 @@ import { nc } from "./nc.js";
 import { role } from "./role.js";
 
 export function org(v) {
-
     return {
         impulse: impulse(v),
         schub: schub(v),
