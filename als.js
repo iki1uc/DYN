@@ -1,35 +1,49 @@
-// als.js – verbindet onkel + oma, aber trennt ihre Interessen
-
-import { onkel } from "./onkel.js";
-import { oma } from "./oma.js";
+// als.js – OMA, ONKEL, ME, OUR, U in einem Modul
 
 export const als = {
 
-    // Oma: Dimensionen
+    // OMA – Tiefe, Dimension, Klarheit
     oma(level, v) {
-        return oma[level](v);
+        return {
+            axis: "OMA",
+            level,
+            value: v
+        };
     },
 
-    // Onkel: Ordnung
+    // ONKEL – Ordnung, Schutz, Aufsicht
     onkel(action, v) {
-        return onkel[action](v);
+        return {
+            axis: "ONKEL",
+            action,
+            value: v
+        };
     },
 
-    // Beide: Oma → Onkel.watch
-    sehen(level, v) {
-        const dim = oma[level](v);
-        return onkel.watch(dim);
+    // ME – Ich, Kern, Fokus
+    me(state, v) {
+        return {
+            axis: "ME",
+            state,
+            value: v
+        };
     },
 
-    // Beide: Oma → Onkel.protect
-    schuetzen(level, v) {
-        const dim = oma[level](v);
-        return onkel.protect(dim);
+    // OUR – Wir, Verbindung, Gemeinschaft
+    our(state, v) {
+        return {
+            axis: "OUR",
+            state,
+            value: v
+        };
     },
 
-    // Beide: Oma → Onkel.order
-    ordnen(level, v) {
-        const dim = oma[level](v);
-        return onkel.order(dim);
+    // U – Universale Instanz, Rahmen, Alles
+    u(type, v) {
+        return {
+            axis: "U",
+            type,
+            value: v
+        };
     }
 };
