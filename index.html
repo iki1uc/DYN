@@ -2,233 +2,690 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>NC‑LAGE‑SYSTEM – Industrie 6.0 Navigation</title>
+<title>DYN – Industrie‑6.0 · iki1uc</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-  body {
-    background: #000;
-    color: #e6e6e6;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
+/* ===== BASIS ===== */
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  background: #0a0a0f;
+  color: #e6e6e6;
+  font-family: 'Courier New', monospace;
+  padding: 16px;
+  min-height: 100vh;
+}
 
-  h1 {
-    text-align: center;
-    padding: 20px;
-    color: #00eaff;
-    font-size: 32px;
-    letter-spacing: 2px;
-  }
+/* ===== HEADER ===== */
+.header {
+  text-align: center;
+  padding: 10px 0 14px;
+  border-bottom: 1px solid #2a2a3a;
+  margin-bottom: 14px;
+}
+.header h1 {
+  color: #00eaff;
+  font-size: 30px;
+  letter-spacing: 4px;
+}
+.header h1 span.dyn { color: #00eaff; }
+.header h1 span.d3d { color: #88ff44; }
+.header h1 span.d9d { color: #ffdd00; }
+.header h1 span.d81d { color: #ff66ff; }
+.header .sub {
+  color: #6688aa;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-top: 3px;
+}
 
-  .shape-panel, .grid {
-    animation: fadeIn 0.8s ease-out;
-  }
+/* ===== COCKPIT GRID ===== */
+.cockpit {
+  display: grid;
+  grid-template-columns: 220px 1fr 210px;
+  gap: 10px;
+  height: calc(100vh - 90px);
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+/* ===== PANELS ===== */
+.panel {
+  background: #111118;
+  border: 1px solid #2a2a3a;
+  border-radius: 8px;
+  padding: 12px 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.panel-title {
+  color: #66ccff;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 1px solid #2a2a3a;
+  padding-bottom: 5px;
+  margin-bottom: 6px;
+}
+.panel a {
+  color: #66ccff;
+  text-decoration: none;
+  display: block;
+  padding: 2px 0;
+  font-size: 11px;
+  border-bottom: 1px solid #1a1a2a;
+  transition: all 0.2s;
+}
+.panel a:hover {
+  color: #00ff88;
+  background: #1a1a2a;
+  padding-left: 6px;
+}
 
-  .shape-panel {
-    margin: 20px;
-    padding: 20px;
-    background: #111;
-    border-radius: 10px;
-    border: 1px solid #333;
-  }
+/* ===== INSTRUMENTE ===== */
+.instrument {
+  background: #0d0d18;
+  border: 1px solid #1a1a3a;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 11px;
+  flex:1;
+  min-width: 50px;
+}
+.instrument .label { color: #6688aa; font-size: 7px; text-transform: uppercase; }
+.instrument .value { font-size: 13px; font-weight: bold; }
+.instrument .value.cyan { color: #00eaff; }
+.instrument .value.green { color: #88ff44; }
+.instrument .value.gold { color: #ffdd00; }
+.instrument .value.pink { color: #ff66ff; }
+.instrument .value.blue { color: #66ccff; }
+.instrument .value.white { color: #ffffff; }
 
-  .shape-panel h3 {
-    color: #ffdd00;
-    margin-bottom: 10px;
-    font-size: 20px;
-  }
+/* ===== DASHBOARD ===== */
+#dashboard {
+  background: #0a0a12;
+  border: 1px solid #2a2a4a;
+  border-radius: 6px;
+  padding: 12px;
+  flex: 1;
+  overflow: auto;
+  min-height: 140px;
+}
 
-  .shape-btn {
-    display: inline-block;
-    margin: 8px;
-    padding: 10px 16px;
-    background: #ffdd00;
-    color: #000;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.2s;
-  }
+#dash-switch {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+#dash-switch button {
+  background: #111122;
+  color: #6688aa;
+  border: 1px solid #2a2a4a;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+#dash-switch button:hover { background: #1a1a3a; border-color: #66ccff; }
+#dash-switch button.active {
+  background: #1a2a4a;
+  color: #00ff88;
+  border-color: #00ff88;
+}
+#dash-switch button.dyn-btn { color: #00eaff; border-color: #004466; }
+#dash-switch button.dyn-btn.active { background: #002233; border-color: #00eaff; }
 
-  .shape-btn:hover {
-    background: #c9b300;
-    transform: scale(1.05);
-  }
+/* ===== BOXEN ===== */
+.box { background:#111120; border:1px solid #2a2a4a; padding:8px 10px; margin:3px 0; border-radius:4px; font-size:12px; }
+.box.cyan { background:#002233; border-color:#00eaff; color:#00eaff; text-align:center; }
+.box.green { background:#002200; border-color:#88ff44; color:#88ff44; }
+.box.gold { background:#1a1a00; border-color:#ffdd00; color:#ffdd00; }
+.box.pink { background:#220044; border-color:#dd88ff; color:#dd88ff; }
+.box.purple { background:#330033; border-color:#ff66ff; color:#ff66ff; }
+.box.blue { background:#002244; border-color:#66ccff; color:#66ccff; }
+.box.white { background:#111122; border-color:#ffffff; color:#ffffff; text-align:center; }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-    padding: 20px;
-  }
+.holo-box {
+  background:#1a0a2a;
+  padding:16px;
+  border:1px solid #550055;
+  border-radius:6px;
+  animation: pulse 2s infinite ease-in-out;
+}
+@keyframes pulse {
+  0% { box-shadow:0 0 6px #8800aa; }
+  50% { box-shadow:0 0 30px #cc44ff; }
+  100% { box-shadow:0 0 6px #8800aa; }
+}
 
-  .module {
-    background: #111;
-    border: 1px solid #333;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    transition: 0.2s;
-  }
+/* ===== DYN ANIMATION ===== */
+.dyn-pulse {
+  animation: dynPulse 2.5s infinite ease-in-out;
+}
+@keyframes dynPulse {
+  0% { opacity:0.7; transform:scale(1); }
+  50% { opacity:1; transform:scale(1.02); border-color:#00eaff; }
+  100% { opacity:0.7; transform:scale(1); }
+}
 
-  .module:hover {
-    transform: scale(1.03);
-    border-color: #00eaff;
-  }
+/* ===== STATUS ===== */
+.status-ok { color:#00ff88; }
+.status-warn { color:#ffdd00; }
+.status-err { color:#ff4444; }
 
-  .module h2 {
-    margin: 0;
-    color: #00ff9d;
-    font-size: 22px;
-  }
+/* ===== FILE LIST ===== */
+.file-list { max-height:140px; overflow-y:auto; font-size:10px; }
+.file-list::-webkit-scrollbar { width:3px; }
+.file-list::-webkit-scrollbar-track { background:#0a0a12; }
+.file-list::-webkit-scrollbar-thumb { background:#2a2a4a; border-radius:2px; }
+.file-list a { font-size:10px; padding:1px 0; }
 
-  .module p {
-    margin: 6px 0;
-    font-size: 14px;
-  }
-
-  .btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 14px;
-    background: #00eaff;
-    color: #000;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.2s;
-  }
-
-  .btn:hover {
-    background: #00bcd4;
-    transform: scale(1.05);
-  }
-
-  /* Live‑Panel */
-  #live-panel {
-    margin: 20px;
-    padding: 20px;
-    background: #111;
-    border-radius: 10px;
-    border: 1px solid #333;
-    color: #00eaff;
-    font-size: 14px;
-    white-space: pre-wrap;
-  }
+/* ===== RESPONSIVE ===== */
+@media (max-width: 860px) {
+  .cockpit { grid-template-columns:1fr; grid-template-rows:auto; height:auto; }
+  .panel { margin-bottom:6px; }
+}
 </style>
-
-<script src="GEO.physik.js"></script>
-<script src="GEO.geo.js"></script>
-<script src="NC.engine.js"></script>
-<script src="org.js"></script>
-<script src="reORG.js"></script>
-<script src="dyn.js"></script>
-
 </head>
-
 <body>
 
-<h1>NC‑LAGE‑SYSTEM – Multi‑Form Navigation</h1>
-
-<!-- Raumformen -->
-<div class="shape-panel">
-  <h3>Raumformen</h3>
-  <a class="shape-btn" href="matrix.html">Matrix</a>
-  <a class="shape-btn" href="pyramide.html">Pyramide</a>
-  <a class="shape-btn" href="cube.html">Würfel</a>
-  <a class="shape-btn" href="cylinder.html">Cylinder</a>
-  <a class="shape-btn" href="reorg.html">REORG‑Ableitung</a>
-  <a class="shape-btn" href="zoom.html">CACHE/ZOOM</a>
-  <a class="shape-btn" href="gpu.html">GPU/CPU‑Sim</a>
+<!-- ===== HEADER ===== -->
+<div class="header">
+  <h1>🌀 <span class="dyn">DYN</span> · <span class="d3d">d3d</span> · <span class="d9d">d9d</span> · <span class="d81d">d81d</span></h1>
+  <div class="sub">iki1uc · 692 Scale · Dynamische Achsen · KI · VOLTAGE · RUM</div>
 </div>
 
-<!-- Module -->
-<div class="grid">
+<!-- ===== COCKPIT ===== -->
+<div class="cockpit">
 
-  <div class="module">
-    <h2>ΔA – DA</h2>
-    <p>LAGE: Norden / Öffnung</p>
-    <p>NC‑Zeichen: ΔA</p>
-    <a class="btn" href="DA/X.room.IN">IN</a>
-    <a class="btn" href="DA/X.room.OUT">OUT</a>
-    <a class="btn" href="DA/X.room.CORE">CORE</a>
+  <!-- ===== LINKS: NAVIGATION ===== -->
+  <div class="panel" style="grid-column:1; grid-row:1/5;">
+    <div class="panel-title">✦ NAVIGATION</div>
+    <div style="font-size:10px; color:#6688aa; padding-bottom:4px; border-bottom:1px solid #1a1a2a;">
+      <span class="status-ok">●</span> DYN: 🌀 aktiv
+      <br><span class="status-ok">●</span> NC: ⚙️ bereit
+      <br><span class="status-ok">●</span> KI: 🧠 lernend
+    </div>
+    <div style="margin-top:4px;">
+      <a href="./CORE.load">⚡ CORE.load</a>
+      <a href="./fin.e.js">🧠 fin.e.js</a>
+      <a href="./ready.js">📈 ready.js</a>
+      <a href="./respo.js">🎯 respo.js</a>
+      <a href="./ID.html">🆔 ID</a>
+      <a href="./suite.html">📦 SUITE</a>
+    </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:4px;">
+      <div class="panel-title" style="font-size:8px;">DYN‑MODULE</div>
+      <a href="./dyn.js">🌀 DYN</a>
+      <a href="./d3d.js">📐 d3d</a>
+      <a href="./d9d.js">📐 d9d</a>
+      <a href="./d81d.js">📐 d81d</a>
+      <a href="./NC.engine.js">⚙️ NC.engine</a>
+    </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:4px;">
+      <div class="panel-title" style="font-size:8px;">KI‑MODULE</div>
+      <a href="./KI.direcktx.js">🧠 KI.direcktx</a>
+      <a href="./KI.earn.js">🧠 KI.earn</a>
+      <a href="./KI.sync.js">🧠 KI.sync</a>
+      <a href="./KI.vector.js">🧠 KI.vector</a>
+    </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:4px;">
+      <div class="panel-title" style="font-size:8px;">RUM / VOLTAGE</div>
+      <a href="./RUM.js">🌀 RUM</a>
+      <a href="./RUMumRUM.js">🌀 RUMumRUM</a>
+      <a href="./VOLTAGE.js">⚡ VOLTAGE</a>
+      <a href="./impulse.js">💥 impulse</a>
+      <a href="./schub.js">🚀 schub</a>
+    </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:4px;">
+      <div class="panel-title" style="font-size:8px;">ORG / reORG</div>
+      <a href="./org.js">📋 ORG</a>
+      <a href="./reORG.js">🔄 reORG</a>
+      <a href="./attikulate.js">🔗 attikulate</a>
+    </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:4px; margin-top:auto;">
+      <a href="./wurzel‑matic.js" style="color:#ffdd00;">🌱 wurzel‑matic</a>
+      <a href="./AXIS/nc.html" style="color:#66ccff;">🌀 NC</a>
+      <a href="./AXIS/phi.html" style="color:#66ccff;">Φ PHI</a>
+    </div>
   </div>
 
-  <div class="module">
-    <h2>NΞ – NE</h2>
-    <p>LAGE: Osten / Träger</p>
-    <p>NC‑Zeichen: NΞ</p>
-    <a class="btn" href="NE/X.room.IN">IN</a>
-    <a class="btn" href="NE/X.room.OUT">OUT</a>
-    <a class="btn" href="NE/X.room.CORE">CORE</a>
+  <!-- ===== MITTE: DASHBOARD ===== -->
+  <div style="grid-column:2; grid-row:1/5; display:flex; flex-direction:column; gap:6px;">
+
+    <!-- INSTRUMENTE -->
+    <div class="panel" style="flex:0; flex-direction:row; flex-wrap:wrap; gap:4px;">
+      <div class="instrument" style="min-width:50px;"><div class="label">🌀 DYN</div><div class="value cyan" id="dyn-val">⟳</div></div>
+      <div class="instrument" style="min-width:50px;"><div class="label">📐 d3d</div><div class="value green" id="d3d-val">⟳</div></div>
+      <div class="instrument" style="min-width:50px;"><div class="label">📐 d9d</div><div class="value gold" id="d9d-val">⟳</div></div>
+      <div class="instrument" style="min-width:50px;"><div class="label">📐 d81d</div><div class="value pink" id="d81d-val">⟳</div></div>
+      <div class="instrument" style="min-width:50px;"><div class="label">⚙️ NC</div><div class="value cyan" id="nc-val">⟳</div></div>
+      <div class="instrument" style="min-width:50px;"><div class="label">🧠 KI</div><div class="value gold" id="ki-val">⟳</div></div>
+      <div class="instrument" style="min-width:50px;"><div class="label">⚡ VOLT</div><div class="value blue" id="volt-val">⟳</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">READY</div><div class="value green" id="ready-val">…</div></div>
+      <div class="instrument" style="min-width:45px;"><div class="label">MIND</div><div class="value pink" id="mind-val">…</div></div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="panel" style="flex:1; min-height:160px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+        <span class="panel-title" style="margin:0; border:0;">📺 DASHBOARD</span>
+        <div id="dash-switch">
+          <button data-mode="grid" class="active">GRID</button>
+          <button data-mode="control">CONTROL</button>
+          <button data-mode="holo">HOLO</button>
+          <button data-mode="auto" class="dyn-btn">🌀 AUTO</button>
+        </div>
+      </div>
+      <div id="dashboard" style="flex:1;">
+        <div class="box cyan dyn-pulse">🌀 DYN · Dynamische Achsen</div>
+      </div>
+    </div>
+
+    <!-- DATEI-BROWSER -->
+    <div class="panel" style="flex:0; max-height:120px;">
+      <div class="panel-title">📂 DATEI‑BROWSER</div>
+      <div class="file-list" id="file-list">
+        <span style="color:#6688aa; font-size:10px;">Lade Dateien…</span>
+      </div>
+    </div>
   </div>
 
-  <div class="module">
-    <h2>βN – BEN</h2>
-    <p>LAGE: Süden / Vollender</p>
-    <p>NC‑Zeichen: βN</p>
-    <a class="btn" href="BEN/X.room.IN">IN</a>
-    <a class="btn" href="BEN/X.room.OUT">OUT</a>
-    <a class="btn" href="BEN/X.room.CORE">CORE</a>
-  </div>
+  <!-- ===== RECHTS: STATUS ===== -->
+  <div class="panel" style="grid-column:3; grid-row:1/5;">
+    <div class="panel-title">✦ STATUS</div>
+    <div style="font-size:11px; line-height:1.8;">
+      <div><span class="status-ok">●</span> DYN: <span style="color:#00eaff;">🌀 dynamisch</span></div>
+      <div><span class="status-ok">●</span> d3d: <span style="color:#88ff44;">3D</span></div>
+      <div><span class="status-ok">●</span> d9d: <span style="color:#ffdd00;">9D</span></div>
+      <div><span class="status-ok">●</span> d81d: <span style="color:#ff66ff;">81D</span></div>
+      <div><span class="status-ok">●</span> NC: <span style="color:#00eaff;">⚙️ bereit</span></div>
+      <div><span class="status-ok">●</span> KI: <span style="color:#ffdd00;">🧠 lernend</span></div>
+      <div><span class="status-ok">●</span> VOLTAGE: <span style="color:#66ccff;">⚡ geladen</span></div>
+      <div><span class="status-ok">●</span> RUM: <span style="color:#ffffff;">🌀 raum</span></div>
+    </div>
 
-  <div class="module">
-    <h2>IX° – IX</h2>
-    <p>LAGE: Westen / Schieber</p>
-    <p>NC‑Zeichen: IX°</p>
-    <a class="btn" href="IX/X.room.IN">IN</a>
-    <a class="btn" href="IX/X.room.OUT">OUT</a>
-    <a class="btn" href="IX/X.room.CORE">CORE</a>
-  </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px;">
+      <div class="panel-title" style="font-size:8px;">ORG / reORG</div>
+      <div style="font-size:9px; color:#6688aa; line-height:1.5;" id="org-status">
+        ORG: geladen<br>reORG: bereit
+      </div>
+    </div>
 
-  <div class="module">
-    <h2>XΙ – XI</h2>
-    <p>LAGE: NW / Schließer</p>
-    <p>NC‑Zeichen: XΙ</p>
-    <a class="btn" href="XI/X.room.IN">IN</a>
-    <a class="btn" href="XI/X.room.OUT">OUT</a>
-    <a class="btn" href="XI/X.room.CORE">CORE</a>
-  </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px;">
+      <div class="panel-title" style="font-size:8px;">HIGH‑END RESPO</div>
+      <div style="font-size:9px; color:#66ccff; line-height:1.5;">
+        Q81 · X81 · A81 · RESPO.ai · Station · Pipeline
+      </div>
+    </div>
 
-  <div class="module">
-    <h2>RΩ – ROOM</h2>
-    <p>LAGE: Zentrum / Matrix</p>
-    <p>NC‑Zeichen: RΩ</p>
-    <a class="btn" href="ROOM/X.room.IN">IN</a>
-    <a class="btn" href="ROOM/X.room.OUT">OUT</a>
-    <a class="btn" href="ROOM/X.room.CORE">CORE</a>
-  </div>
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px;">
+      <div class="panel-title" style="font-size:8px;">ORDNUNGEN</div>
+      <div style="font-size:9px; color:#6688aa; line-height:1.5;">
+        1: CONTINUUM <span style="color:#00ff88;">●</span><br>
+        2: TRANSWARP <span style="color:#66ccff;">●</span><br>
+        3: WARP3 <span style="color:#88ff44;">●</span><br>
+        4: AEON <span style="color:#ff66ff;">●</span>
+      </div>
+    </div>
 
-  <div class="module">
-    <h2>∪ – U</h2>
-    <p>LAGE: Ober‑Orbit / Ultra‑Navi</p>
-    <p>NC‑Zeichen: ∪</p>
-    <a class="btn" href="U/X.room.IN">IN</a>
-    <a class="btn" href="U/X.room.OUT">OUT</a>
-    <a class="btn" href="U/X.room.CORE">CORE</a>
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px;">
+      <div class="panel-title" style="font-size:8px;">DYN‑FLOW</div>
+      <div style="font-size:10px; color:#00eaff;" id="dyn-status">🌀 fließt…</div>
+    </div>
+
+    <div style="border-top:1px solid #1a1a2a; padding-top:6px; margin-top:auto;">
+      <div style="font-size:9px; color:#445566;" id="clock">⏱️ </div>
+    </div>
   </div>
 
 </div>
 
-<!-- Live‑Panel -->
-<div id="live-panel"></div>
-
+<!-- ============================================================ -->
+<!-- SCRIPT – ULTIMATE DYN · MIT ALLEN MODULEN -->
+<!-- ============================================================ -->
 <script>
-  const nc = NC.run(9);
-  const orgData = org(9);
-  const reorgData = reORG(orgData);
+(function() {
 
-  document.getElementById("live-panel").innerText =
-    "NC.engine:\n" + JSON.stringify(nc, null, 2) +
-    "\n\nORG:\n" + JSON.stringify(orgData, null, 2) +
-    "\n\nREORG:\n" + JSON.stringify(reorgData, null, 2);
+  // ===== DYN KERNEL =====
+  const DYN = {
+    axis: 0,
+    value: 0,
+    state: "DYNAMIC",
+    step: function() {
+      this.axis = (this.axis + 1) % 10;
+      this.value = Math.sin(this.axis / 3) * 10 + 10;
+      return { axis: this.axis, value: this.value, state: this.state };
+    }
+  };
+
+  // ===== d3d, d9d, d81d =====
+  const D3D = { value: 0, step: function() { this.value = (this.value + 1) % 27; return this.value; } };
+  const D9D = { value: 0, step: function() { this.value = (this.value + 3) % 81; return this.value; } };
+  const D81D = { value: 0, step: function() { this.value = (this.value + 9) % 243; return this.value; } };
+
+  // ===== NC =====
+  const NC = {
+    state: "READY",
+    value: 0,
+    run: function(v) {
+      this.value = v || 27;
+      return { value: this.value, state: this.state, timestamp: Date.now() };
+    }
+  };
+
+  // ===== KI =====
+  const KI = {
+    state: "LEARNING",
+    earn: 0,
+    sync: 0,
+    vector: { x: 0, y: 0, z: 0 },
+    step: function() {
+      this.earn = (this.earn + 1) % 100;
+      this.sync = Math.sin(this.earn / 10) * 10 + 10;
+      this.vector.x = Math.sin(this.earn / 5) * 5;
+      this.vector.y = Math.cos(this.earn / 4) * 4;
+      this.vector.z = Math.sin(this.earn / 3) * 3;
+      return { earn: this.earn, sync: this.sync, vector: this.vector };
+    }
+  };
+
+  // ===== VOLTAGE =====
+  const VOLTAGE = {
+    value: 0,
+    step: function() {
+      this.value = Math.sin(Date.now() / 1000) * 50 + 50;
+      return this.value;
+    }
+  };
+
+  // ===== ORG / reORG =====
+  const ORG = { data: [], state: "ORGANIZED" };
+  const REORG = { data: [], state: "REORGANIZED" };
+
+  function org(v) {
+    ORG.data = Array.from({ length: v || 9 }, (_, i) => ({ id: i, value: i * 2 }));
+    return ORG;
+  }
+
+  function reORG(input) {
+    REORG.data = (input && input.data) ? input.data.map(d => ({ ...d, reorganized: d.value * 3 })) : [];
+    return REORG;
+  }
+
+  // ===== RUM =====
+  const RUM = { value: 0, state: "RAUM", step: function() { this.value = (this.value + 1) % 27; return this.value; } };
+
+  // ===== FALLBACKS =====
+  function getReady() {
+    try { if (typeof READY === 'function') return READY(); if (window.READY) return window.READY(); } catch {}
+    return Math.pow(3, Math.pow(9, 81));
+  }
+
+  function getRaum() {
+    return { ZUG: "A1", BLATT: "ROOT", STATUS: "REAL", IST: "OK", NEU: "TMP" };
+  }
+
+  function getMind(raum, map) {
+    return {
+      EBENE: "AEON",
+      ORDNUNG: 4,
+      STATUS: "° & % 3",
+      SIGNAL: raum && raum.IST === "OK" ? "grün" : "gelb",
+      WAHRNEHMUNG: raum && raum.STATUS === "REAL" ? "klar" : "unscharf",
+      FOKUS: map ? "verbunden" : "leer",
+      VERFÜGBARKEIT: map ? "hoch" : "niedrig",
+      STABILITÄT: raum && raum.NEU === "TMP" ? "variabel" : "stabil",
+      RÜCKFÜHRUNG: raum && raum.BLATT === "ROOT" ? "aktiv" : "neutral",
+      SIGNATUR: "AEON-A1-ROOT"
+    };
+  }
+
+  // ===== LOOP =====
+  let loopInterval = null;
+  let cycle = 0;
+
+  // ===== INSTRUMENTE =====
+  function updateInstruments() {
+    try {
+      const ready = getReady();
+      const raum = getRaum();
+      const mind = getMind(raum, true);
+
+      const dyn = DYN.step();
+      const d3d = D3D.step();
+      const d9d = D9D.step();
+      const d81d = D81D.step();
+      const nc = NC.run(cycle);
+      const ki = KI.step();
+      const volt = VOLTAGE.step();
+      const rum = RUM.step();
+      const orgData = org(9);
+      const reorgData = reORG(orgData);
+
+      document.getElementById("dyn-val").innerText = "🌀" + dyn.axis;
+      document.getElementById("d3d-val").innerText = "📐" + d3d;
+      document.getElementById("d9d-val").innerText = "📐" + d9d;
+      document.getElementById("d81d-val").innerText = "📐" + d81d;
+      document.getElementById("nc-val").innerText = "⚙️" + nc.value;
+      document.getElementById("ki-val").innerText = "🧠" + ki.earn;
+      document.getElementById("volt-val").innerText = "⚡" + volt.toFixed(0);
+      document.getElementById("ready-val").innerText = typeof ready === 'number' ? ready.toFixed(0) : String(ready);
+      document.getElementById("mind-val").innerText = mind.EBENE + "(" + mind.ORDNUNG + ")";
+
+      document.getElementById("org-status").innerHTML =
+        "ORG: " + (orgData.data ? orgData.data.length : 0) +
+        " Elemente<br>reORG: " + (reorgData.data ? reorgData.data.length : 0) +
+        " reorganisiert";
+
+      document.getElementById("dyn-status").innerHTML =
+        "🌀 DYN · Axis:" + dyn.axis +
+        " · d3d:" + d3d +
+        " · d9d:" + d9d +
+        " · d81d:" + d81d +
+        " · RUM:" + rum;
+
+    } catch(e) {
+      // Fallback
+    }
+  }
+
+  // ===== LOOP =====
+  function runLoop() {
+    cycle++;
+    updateInstruments();
+  }
+
+  function startLoop() {
+    if (loopInterval) clearInterval(loopInterval);
+    loopInterval = setInterval(runLoop, 1600);
+  }
+
+  // ===== DASHBOARD =====
+  const dash = document.getElementById("dashboard");
+
+  function renderGrid() {
+    try {
+      const ready = getReady();
+      const raum = getRaum();
+      const mind = getMind(raum, true);
+      const dyn = DYN.step();
+      const nc = NC.run(cycle);
+      const ki = KI.step();
+      const volt = VOLTAGE.step();
+
+      dash.innerHTML = `
+        <div class="box cyan dyn-pulse">🌀 DYN · Axis:${dyn.axis} · ${dyn.value.toFixed(0)}</div>
+        <div class="box green">📐 d3d:${D3D.value} · d9d:${D9D.value} · d81d:${D81D.value}</div>
+        <div class="box gold">🧠 KI:${ki.earn} · sync:${ki.sync.toFixed(0)}</div>
+        <div class="box blue">⚡ VOLTAGE:${volt.toFixed(0)}V · RUM:${RUM.value}</div>
+        <div class="box green">📊 READY: ${typeof ready === 'number' ? ready.toFixed(0) : ready}</div>
+        <div class="box pink">🧠 MIND: ${mind.EBENE} (${mind.ORDNUNG})</div>
+        <div class="box purple">♾️ AEON: ${mind.SIGNATUR}</div>
+        <div style="font-size:8px;color:#6688aa;margin-top:3px;">
+          NC:${nc.value} · KI.vector: ${ki.vector.x.toFixed(1)},${ki.vector.y.toFixed(1)},${ki.vector.z.toFixed(1)}
+        </div>
+      `;
+    } catch {
+      dash.innerHTML = `<div class="box cyan">🌀 DYN</div><div class="box green">GRID</div>`;
+    }
+  }
+
+  function renderControl() {
+    try {
+      const ready = getReady();
+      const raum = getRaum();
+      const mind = getMind(raum, true);
+      const dyn = DYN.step();
+      const nc = NC.run(cycle);
+      const ki = KI.step();
+      const volt = VOLTAGE.step();
+      const orgData = org(9);
+      const reorgData = reORG(orgData);
+
+      dash.innerHTML = `
+        <div style="background:#111120;padding:14px;border:1px solid #2a2a4a;border-radius:4px;">
+          <div style="color:#00eaff;font-size:18px;text-align:center;">🌀 DYN · Axis:${dyn.axis}</div>
+          <div style="color:#88ff44;font-size:14px;text-align:center;">📐 d3d:${D3D.value} · d9d:${D9D.value} · d81d:${D81D.value}</div>
+          <h2 style="color:#66ccff;font-size:14px;">⏣ CONTROL</h2>
+          <p style="color:#88ff44;">READY: ${typeof ready === 'number' ? ready.toFixed(0) : ready}</p>
+          <p style="color:#dd88ff;">MIND: ${mind.EBENE} (${mind.ORDNUNG})</p>
+          <p style="color:#ff66ff;">AEON: ${mind.SIGNATUR}</p>
+          <p style="color:#00ff88;">SIGNAL: ${mind.SIGNAL}</p>
+          <p style="color:#ffdd00;font-size:10px;">⚙️ NC:${nc.value} · 🧠 KI:${ki.earn} · ⚡ ${volt.toFixed(0)}V</p>
+          <p style="color:#66ccff;font-size:9px;">ORG:${orgData.data.length} · reORG:${reorgData.data.length}</p>
+        </div>
+      `;
+    } catch {
+      dash.innerHTML = `<div style="background:#111120;padding:14px;border:1px solid #2a2a4a;"><h2 style="color:#66ccff;">CONTROL</h2></div>`;
+    }
+  }
+
+  function renderHolo() {
+    try {
+      const ready = getReady();
+      const raum = getRaum();
+      const mind = getMind(raum, true);
+      const dyn = DYN.step();
+      const nc = NC.run(cycle);
+      const ki = KI.step();
+      const volt = VOLTAGE.step();
+
+      dash.innerHTML = `
+        <div class="holo-box">
+          <div style="color:#00eaff;font-size:26px;text-align:center;">🌀 DYN · ${dyn.axis}</div>
+          <div style="color:#88ff44;font-size:18px;text-align:center;">📐 ${D3D.value} · ${D9D.value} · ${D81D.value}</div>
+          <h2 style="color:#ff66ff;font-size:14px;">✦ HOLO CORE ✦</h2>
+          <p style="color:#88ff44;">READY: ${typeof ready === 'number' ? ready.toFixed(0) : ready}</p>
+          <p style="color:#dd88ff;">MIND: ${mind.EBENE}</p>
+          <p style="color:#ff66ff;">AEON: ${mind.SIGNATUR}</p>
+          <p style="color:#00ff88;">SIGNAL: ${mind.SIGNAL}</p>
+          <p style="color:#ffdd00;font-size:10px;">⚙️ NC:${nc.value} · 🧠 KI:${ki.earn} · ⚡ ${volt.toFixed(0)}V</p>
+          <p style="color:#66ccff;font-size:9px;">Vector: ${ki.vector.x.toFixed(1)},${ki.vector.y.toFixed(1)},${ki.vector.z.toFixed(1)}</p>
+        </div>
+      `;
+    } catch {
+      dash.innerHTML = `<div class="holo-box"><h2 style="color:#ff66ff;">HOLO</h2></div>`;
+    }
+  }
+
+  // ===== ENTSCHEIDUNG =====
+  function decideMode() {
+    try {
+      const ready = getReady();
+      const raum = getRaum();
+      let g=0,c=0,h=0;
+      if (ready > 0) g += 2;
+      if (raum.STATUS === "REAL") c += 2;
+      if (DYN.axis > 5) h += 3;
+      const max = Math.max(g,c,h);
+      if (max === g) return "grid";
+      if (max === c) return "control";
+      return "holo";
+    } catch { return "grid"; }
+  }
+
+  function updateDashboard(mode) {
+    if (mode === "grid") renderGrid();
+    else if (mode === "control") renderControl();
+    else if (mode === "holo") renderHolo();
+    else { updateDashboard(decideMode()); return; }
+    updateInstruments();
+  }
+
+  // ===== SWITCHER =====
+  let autoInterval = null;
+
+  function setupSwitcher() {
+    document.querySelectorAll("#dash-switch button").forEach(btn => {
+      btn.addEventListener("click", function() {
+        document.querySelectorAll("#dash-switch button").forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+        if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+        if (this.dataset.mode === "auto") {
+          updateDashboard("auto");
+          autoInterval = setInterval(() => updateDashboard("auto"), 1500 + Math.random() * 1500);
+          return;
+        }
+        updateDashboard(this.dataset.mode);
+      });
+    });
+  }
+
+  // ===== DATEI-BROWSER =====
+  function loadFileList() {
+    const list = document.getElementById("file-list");
+    const files = [
+      "CORE.load","fin.e.js","ready.js","respo.js","ID.html","suite.html",
+      "dyn.js","d3d.js","d9d.js","d81d.js","NC.engine.js",
+      "KI.direcktx.js","KI.earn.js","KI.sync.js","KI.vector.js",
+      "RUM.js","RUMumRUM.js","VOLTAGE.js","impulse.js","schub.js",
+      "org.js","reORG.js","attikulate.js","wurzel‑matic.js",
+      "visual/CONTINUUM.html","visual/LAGE.html","visual/ORT.html",
+      "AXIS/nc.html","AXIS/phi.html","AXIS/phi2.html","AXIS/phiinfty.html"
+    ];
+    list.innerHTML = files.map(f => `<a href="./${f}">📄 ${f}</a>`).join("");
+  }
+
+  // ===== CLOCK =====
+  function updateClock() {
+    document.getElementById("clock").innerText = "⏱️ " + new Date().toLocaleTimeString();
+  }
+
+  // ===== MODULE NACHLADEN =====
+  function tryLoadModules() {
+    try {
+      import('./ready.js').then(m => { window.READY = m.READY || m.default; updateInstruments(); }).catch(()=>{});
+      import('./core/respo.js').then(m => { window.RESPO_AXIS = m.RESPO_AXIS || m.default; updateInstruments(); }).catch(()=>{});
+    } catch {}
+  }
+
+  // ===== START =====
+  function start() {
+    loadFileList();
+    setupSwitcher();
+    updateDashboard("grid");
+    updateClock();
+    setInterval(updateClock, 1000);
+    setInterval(updateInstruments, 2000);
+    startLoop();
+    tryLoadModules();
+
+    console.log("🌀 DYN geladen – Industrie‑6.0 · iki1uc");
+    console.log("📊 692 Repos · d3d · d9d · d81d · KI · VOLTAGE · RUM");
+    console.log("🧠 KI.earn · KI.sync · KI.vector aktiv");
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+
+})();
 </script>
 
 </body>
